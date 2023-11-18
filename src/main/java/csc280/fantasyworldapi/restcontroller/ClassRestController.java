@@ -9,6 +9,8 @@ package csc280.fantasyworldapi.restcontroller;
 import csc280.fantasyworldapi.methods.ClassMethods;
 import csc280.fantasyworldapi.objects.Class;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -17,36 +19,29 @@ public class ClassRestController {
 
     private ClassMethods cm = new ClassMethods();
 
-    @RequestMapping(path="", method = RequestMethod.POST)
-    public void createClass(@RequestBody Class document) {
-        int id = 0;
-        List<Class> classes = cm.findAllClasses();
-        for (Class c : classes) {
-            if (c.getId() > id) id = c.getId();
-        }
-        id++;
-        document.setId(id);
+    @RequestMapping(path = "", method = RequestMethod.POST)
+    public void createClass(@RequestBody Class document) throws SQLException {
         cm.addClass(document);
     }
 
-    @RequestMapping(path="", method = RequestMethod.GET)
-    public List<Class> findAllMessages() {
+
+    @RequestMapping(path = "", method = RequestMethod.GET)
+    public List<Class> findAllMessages() throws SQLException {
         return cm.findAllClasses();
     }
 
-    @RequestMapping(path="/{id}", method = RequestMethod.GET)
-    public Class findOneMessage(@PathVariable int id) {
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public Class findOneMessage(@PathVariable int id) throws SQLException {
         return cm.findClassById(id);
     }
 
-    @RequestMapping(path="/{id}", method = RequestMethod.DELETE)
-    public void DeleteIt(@PathVariable int id) {
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    public void DeleteIt(@PathVariable int id) throws SQLException {
         cm.deleteClass(id);
     }
 
-    @RequestMapping(path="/{id}", method = RequestMethod.PUT)
-    public void update(@PathVariable int id, @RequestBody Class m) {
-        m.setId(id);
-        cm.updateClass(m);
+    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+    public void update(@PathVariable int id, @RequestBody Class m) throws SQLException {
+        cm.updateClass(id, m);
     }
 }

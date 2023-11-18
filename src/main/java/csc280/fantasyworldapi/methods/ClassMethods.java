@@ -8,38 +8,29 @@ package csc280.fantasyworldapi.methods;
 
 import csc280.fantasyworldapi.objects.Class;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClassMethods {
 
-    ArrayList<Class> classes = new ArrayList<>();
-
-    public void addClass(Class document) {
-        classes.add(document);
+    public void addClass(Class document) throws SQLException {
+        DB.createClass(document);
     }
 
-    public List<Class> findAllClasses() {
-        return classes;
+    public List<Class> findAllClasses() throws SQLException {
+        return DB.findALLClasses();
     }
 
-    public Class findClassById(int id) {
-        return classes.stream().filter(m -> m.getId() == id).findFirst().orElse(null);
+    public Class findClassById(int id) throws SQLException {
+        return DB.findClass(id);
     }
 
-    public void deleteClass(int id) {
-        classes.removeIf(m -> m.getId() == id);
+    public void deleteClass(int id) throws SQLException {
+        DB.deleteClass(id);
     }
 
-    public void updateClass(Class m) {
-        for (Class x : classes){
-            if (x.getId()==m.getId()){
-                x.setClassName(m.getClassName());
-                x.setClassImage(m.getClassImage());
-                x.setClassDescription(m.getClassDescription());
-                x.setClassPrimaryAbility(m.getClassPrimaryAbility());
-                x.setClassSaves(m.getClassSaves());
-            }
-        }
+    public void updateClass(int id, Class m) throws SQLException {
+        DB.updateClass(id, m);
     }
 }

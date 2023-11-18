@@ -11,8 +11,7 @@ public class Class {
     private String className, classImage, classDescription;
     private String[] classPrimaryAbility, classSaves;
 
-    public Class(int id, String className, String classImage, String classDescription, String[] classPrimaryAbility, String[] classSaves) {
-        this.id = id;
+    public Class(String className, String classImage, String classDescription, String[] classPrimaryAbility, String[] classSaves) {
         this.className = className;
         this.classImage = classImage;
         this.classDescription = classDescription;
