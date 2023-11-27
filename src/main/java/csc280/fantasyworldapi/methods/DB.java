@@ -17,6 +17,9 @@ public class DB {
     static String user = "root";
     static String password = "pass";
 
+
+
+
     public static void createClass(Class document) throws SQLException {
         String sql = "INSERT INTO fantasy.classes(className, classImage, classDescription, classPrimaryAbility, classSaves) VALUES (?, ?, ?, ?, ?)";
 
@@ -100,8 +103,6 @@ public class DB {
             }
         }
     }
-
-
 
     private static String[] stringToArray(String str) {
 
