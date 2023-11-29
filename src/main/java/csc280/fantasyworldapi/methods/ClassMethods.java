@@ -9,7 +9,6 @@ package csc280.fantasyworldapi.methods;
 import csc280.fantasyworldapi.objects.Class;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ClassMethods {

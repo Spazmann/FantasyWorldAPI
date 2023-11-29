@@ -42,12 +42,17 @@ public class SecurityConfig {
         userDetailsManager.setAuthoritiesByUsernameQuery(
                 "SELECT username, role FROM users WHERE username = ?");
 
+        userDetailsManager.setRolePrefix("ROLE_");
+        userDetailsManager.setEnableAuthorities(true);
+
         return userDetailsManager;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests(authorize -> authorize
+                        .requestMatchers("/user/checkUser").permitAll()
+                        .requestMatchers("/user/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/class/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/class/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/class/**").hasAnyRole("USER", "ADMIN")
