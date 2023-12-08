@@ -6,15 +6,16 @@
  */
 package csc280.fantasyworldapi.objects;
 
-public class User {
-    private int id;
-    private String username, password, role;
+import jakarta.persistence.*;
 
-    public User(String username, String password, String role) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
-    }
+@Entity
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(nullable = false)
+    private String username, password, role;
 
     public int getId() {
         return id;

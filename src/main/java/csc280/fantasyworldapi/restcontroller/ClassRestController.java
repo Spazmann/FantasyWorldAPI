@@ -6,8 +6,9 @@
  */
 package csc280.fantasyworldapi.restcontroller;
 
-import csc280.fantasyworldapi.methods.ClassMethods;
 import csc280.fantasyworldapi.objects.Class;
+import csc280.fantasyworldapi.objects.ClassJPARepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -17,31 +18,36 @@ import java.util.List;
 @RequestMapping("/class")
 public class ClassRestController {
 
-    private ClassMethods cm = new ClassMethods();
+    @Autowired
+    private ClassJPARepository classJPARepository;
 
     @RequestMapping(path = "", method = RequestMethod.POST)
     public void createClass(@RequestBody Class document) throws SQLException {
-        cm.addClass(document);
+        classJPARepository.save(document);
     }
 
 
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<Class> findAllMessages() throws SQLException {
-        return cm.findAllClasses();
+        return classJPARepository.findAll();
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public Class findOneMessage(@PathVariable int id) throws SQLException {
-        return cm.findClassById(id);
+        return classJPARepository.findById(id).get();
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     public void DeleteIt(@PathVariable int id) throws SQLException {
-        cm.deleteClass(id);
+        classJPARepository.deleteById(id);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
     public void update(@PathVariable int id, @RequestBody Class m) throws SQLException {
-        cm.updateClass(id, m);
+        Class s = classJPARepository.findById(id).get();
+        s.setClassName(m.getClassName());
+        s.setClassImage(m.getClassImage());
+        s.setClassDescription(m.getClassDescription());
+        classJPARepository.save(s);
     }
 }

@@ -6,18 +6,17 @@
  */
 package csc280.fantasyworldapi.objects;
 
-public class Spell {
-    private int id;
-    private String spellName, spellDescription, spellImage, spellCastingTime, spellCost;
+import jakarta.persistence.*;
 
-    public Spell(int id, String spellName, String spellDescription, String spellImage, String spellCastingTime, String spellCost) {
-        this.id = id;
-        this.spellName = spellName;
-        this.spellDescription = spellDescription;
-        this.spellImage = spellImage;
-        this.spellCastingTime = spellCastingTime;
-        this.spellCost = spellCost;
-    }
+@Entity
+public class Spell {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(nullable = false)
+    private String spellName, spellDescription, spellImage;
 
     public int getId() {
         return id;
@@ -49,21 +48,5 @@ public class Spell {
 
     public void setSpellImage(String spellImage) {
         this.spellImage = spellImage;
-    }
-
-    public String getSpellCastingTime() {
-        return spellCastingTime;
-    }
-
-    public void setSpellCastingTime(String spellCastingTime) {
-        this.spellCastingTime = spellCastingTime;
-    }
-
-    public String getSpellCost() {
-        return spellCost;
-    }
-
-    public void setSpellCost(String spellCost) {
-        this.spellCost = spellCost;
     }
 }

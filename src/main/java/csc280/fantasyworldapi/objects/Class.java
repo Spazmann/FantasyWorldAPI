@@ -6,18 +6,17 @@
  */
 package csc280.fantasyworldapi.objects;
 
-public class Class {
-    private int id;
-    private String className, classImage, classDescription;
-    private String[] classPrimaryAbility, classSaves;
+import jakarta.persistence.*;
 
-    public Class(String className, String classImage, String classDescription, String[] classPrimaryAbility, String[] classSaves) {
-        this.className = className;
-        this.classImage = classImage;
-        this.classDescription = classDescription;
-        this.classPrimaryAbility = classPrimaryAbility;
-        this.classSaves = classSaves;
-    }
+@Entity
+public class Class {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(nullable = false)
+    private String className, classImage, classDescription;
 
     public int getId() {
         return id;
@@ -49,21 +48,5 @@ public class Class {
 
     public void setClassDescription(String classDescription) {
         this.classDescription = classDescription;
-    }
-
-    public String[] getClassPrimaryAbility() {
-        return classPrimaryAbility;
-    }
-
-    public void setClassPrimaryAbility(String[] classPrimaryAbility) {
-        this.classPrimaryAbility = classPrimaryAbility;
-    }
-
-    public String[] getClassSaves() {
-        return classSaves;
-    }
-
-    public void setClassSaves(String[] classSaves) {
-        this.classSaves = classSaves;
     }
 }

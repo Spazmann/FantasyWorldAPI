@@ -6,47 +6,47 @@
  */
 package csc280.fantasyworldapi.restcontroller;
 
-import csc280.fantasyworldapi.methods.SpellMethods;
 import csc280.fantasyworldapi.objects.Spell;
+import csc280.fantasyworldapi.objects.SpellJPARepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
 @RequestMapping("/spell")
 public class SpellRestController {
 
-    private SpellMethods sm = new SpellMethods();
+    @Autowired
+    private SpellJPARepository spellJPARepository;
 
-    @RequestMapping(path="", method = RequestMethod.POST)
-    public void createMessage(@RequestBody Spell document) {
-        int id = 0;
-        List<Spell> classes = sm.findAllSpells();
-        for (Spell c : classes) {
-            if (c.getId() > id) id = c.getId();
-        }
-        id++;
-        document.setId(id);
-        sm.addSpell(document);
+    @RequestMapping(path = "", method = RequestMethod.POST)
+    public void createClass(@RequestBody Spell document) throws SQLException {
+        spellJPARepository.save(document);
     }
 
-    @RequestMapping(path="", method = RequestMethod.GET)
-    public List<Spell> findAllMessages() {
-        return sm.findAllSpells();
+    @RequestMapping(path = "", method = RequestMethod.GET)
+    public List<Spell> findAllMessages() throws SQLException {
+        return spellJPARepository.findAll();
     }
 
-    @RequestMapping(path="/{id}", method = RequestMethod.GET)
-    public Spell findOneMessage(@PathVariable int id) {
-        return sm.findSpellById(id);
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public Spell findOneMessage(@PathVariable int id) throws SQLException {
+        return spellJPARepository.findById(id).get();
     }
 
-    @RequestMapping(path="/{id}", method = RequestMethod.DELETE)
-    public void DeleteIt(@PathVariable int id) {
-        sm.deleteSpell(id);
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    public void DeleteIt(@PathVariable int id) throws SQLException {
+        spellJPARepository.deleteById(id);
     }
 
-    @RequestMapping(path="/{id}", method = RequestMethod.PUT)
-    public void update(@PathVariable int id, @RequestBody Spell m) {
-        m.setId(id);
-        sm.updateSpell(m);
+    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+    public void update(@PathVariable int id, @RequestBody Spell m) throws SQLException {
+        Spell s = spellJPARepository.findById(id).get();
+        s.setSpellName(m.getSpellName());
+        s.setSpellImage(m.getSpellImage());
+        s.setSpellDescription(m.getSpellDescription());
+        spellJPARepository.save(s);
     }
 }

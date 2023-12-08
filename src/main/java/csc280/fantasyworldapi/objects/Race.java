@@ -6,18 +6,17 @@
  */
 package csc280.fantasyworldapi.objects;
 
-public class Race {
-    private int id;
-    private String raceName, raceImage, raceDescription;
-    private String[] raceRacialTraits;
+import jakarta.persistence.*;
 
-    public Race(int id, String raceName, String raceImage, String raceDescription, String[] raceRacialTraits) {
-        this.id = id;
-        this.raceName = raceName;
-        this.raceImage = raceImage;
-        this.raceDescription = raceDescription;
-        this.raceRacialTraits = raceRacialTraits;
-    }
+@Entity
+public class Race {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(nullable = false)
+    private String raceName, raceImage, raceDescription;
 
     public int getId() {
         return id;
@@ -49,13 +48,5 @@ public class Race {
 
     public void setRaceDescription(String raceDescription) {
         this.raceDescription = raceDescription;
-    }
-
-    public String[] getRaceRacialTraits() {
-        return raceRacialTraits;
-    }
-
-    public void setRaceRacialTraits(String[] raceRacialTraits) {
-        this.raceRacialTraits = raceRacialTraits;
     }
 }
