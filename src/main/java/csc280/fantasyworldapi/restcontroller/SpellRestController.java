@@ -9,6 +9,7 @@ package csc280.fantasyworldapi.restcontroller;
 import csc280.fantasyworldapi.objects.Spell;
 import csc280.fantasyworldapi.objects.SpellJPARepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -22,6 +23,7 @@ public class SpellRestController {
     private SpellJPARepository spellJPARepository;
 
     @RequestMapping(path = "", method = RequestMethod.POST)
+    @ResponseStatus(code = HttpStatus.CREATED)
     public void createClass(@RequestBody Spell document) throws SQLException {
         spellJPARepository.save(document);
     }
@@ -37,11 +39,13 @@ public class SpellRestController {
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void DeleteIt(@PathVariable int id) throws SQLException {
         spellJPARepository.deleteById(id);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void update(@PathVariable int id, @RequestBody Spell m) throws SQLException {
         Spell s = spellJPARepository.findById(id).get();
         s.setSpellName(m.getSpellName());

@@ -9,6 +9,7 @@ package csc280.fantasyworldapi.restcontroller;
 import csc280.fantasyworldapi.objects.User;
 import csc280.fantasyworldapi.objects.UserJPRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -22,6 +23,7 @@ public class UserRestController {
     private UserJPRepository userJPARepository;
 
     @RequestMapping(path = "", method = RequestMethod.POST)
+    @ResponseStatus(code = HttpStatus.CREATED)
     public void createClass(@RequestBody User document) throws SQLException {
         userJPARepository.save(document);
     }
@@ -37,11 +39,13 @@ public class UserRestController {
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void DeleteIt(@PathVariable int id) throws SQLException {
         userJPARepository.deleteById(id);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void update(@PathVariable int id, @RequestBody User m) throws SQLException {
         User s = userJPARepository.findById(id).get();
         s.setRole(m.getRole());

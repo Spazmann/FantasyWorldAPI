@@ -9,6 +9,7 @@ package csc280.fantasyworldapi.objects;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "`character`")
 public class Character {
 
     @Id
