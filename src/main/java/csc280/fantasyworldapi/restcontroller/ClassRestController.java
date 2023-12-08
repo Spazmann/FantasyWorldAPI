@@ -26,7 +26,6 @@ public class ClassRestController {
         classJPARepository.save(document);
     }
 
-
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<Class> findAllMessages() throws SQLException {
         return classJPARepository.findAll();

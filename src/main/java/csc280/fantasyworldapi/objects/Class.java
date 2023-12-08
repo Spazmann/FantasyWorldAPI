@@ -6,7 +6,11 @@
  */
 package csc280.fantasyworldapi.objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Class {
@@ -15,8 +19,31 @@ public class Class {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    public List<Spell> getClassSpells() {
+        return classSpells;
+    }
+
+    public void setClassSpells(List<Spell> classSpells) {
+        this.classSpells = classSpells;
+    }
+
+    public List<Character> getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(List<Character> characters) {
+        this.characters = characters;
+    }
+
     @Column(nullable = false)
     private String className, classImage, classDescription;
+
+    @ManyToMany(mappedBy = "classesContainingSpell")
+    @JsonIgnore
+    private List<Spell> classSpells = new ArrayList<>();
+
+    @OneToMany(mappedBy = "aClass")
+    private List<Character> characters = new ArrayList<>();
 
     public int getId() {
         return id;

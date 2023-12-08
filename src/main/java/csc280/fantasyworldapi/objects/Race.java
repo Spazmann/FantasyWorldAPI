@@ -8,6 +8,9 @@ package csc280.fantasyworldapi.objects;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Race {
 
@@ -18,8 +21,19 @@ public class Race {
     @Column(nullable = false)
     private String raceName, raceImage, raceDescription;
 
+    @OneToMany(mappedBy = "race")
+    private List<Character> characters = new ArrayList<>();
+
     public int getId() {
         return id;
+    }
+
+    public List<Character> getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(List<Character> characters) {
+        this.characters = characters;
     }
 
     public void setId(int id) {

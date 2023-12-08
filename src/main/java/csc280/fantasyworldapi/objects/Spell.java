@@ -8,6 +8,9 @@ package csc280.fantasyworldapi.objects;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Spell {
 
@@ -17,6 +20,9 @@ public class Spell {
 
     @Column(nullable = false)
     private String spellName, spellDescription, spellImage;
+
+    @ManyToMany
+    private List<Class> classesContainingSpell = new ArrayList<>();
 
     public int getId() {
         return id;
