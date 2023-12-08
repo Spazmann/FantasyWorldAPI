@@ -43,6 +43,7 @@ public class Class {
     private List<Spell> classSpells = new ArrayList<>();
 
     @OneToMany(mappedBy = "aClass")
+    @JsonIgnore
     private List<Character> characters = new ArrayList<>();
 
     public int getId() {

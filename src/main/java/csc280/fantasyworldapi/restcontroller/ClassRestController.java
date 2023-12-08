@@ -10,6 +10,7 @@ import csc280.fantasyworldapi.objects.Class;
 import csc280.fantasyworldapi.objects.ClassJPARepository;
 import csc280.fantasyworldapi.objects.Spell;
 import csc280.fantasyworldapi.objects.SpellJPARepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -59,12 +60,14 @@ public class ClassRestController {
         classJPARepository.save(s);
     }
 
+    @Transactional
     @PostMapping("/{classId}/addSpell/{spellId}")
     @ResponseStatus(code=HttpStatus.NO_CONTENT)
     public void addSpellToClass(@PathVariable int classId, @PathVariable int spellId) {
         Class c = classJPARepository.findById(classId).get();
         Spell s = spellJPARepository.findById(spellId).get();
         c.getClassSpells().add(s);
+        s.getClassesContainingSpell().add(c);
         classJPARepository.save(c);
     }
 }

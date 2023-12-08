@@ -6,6 +6,7 @@
  */
 package csc280.fantasyworldapi.objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -21,7 +22,16 @@ public class Spell {
     @Column(nullable = false)
     private String spellName, spellDescription, spellImage;
 
+    public List<Class> getClassesContainingSpell() {
+        return classesContainingSpell;
+    }
+
+    public void setClassesContainingSpell(List<Class> classesContainingSpell) {
+        this.classesContainingSpell = classesContainingSpell;
+    }
+
     @ManyToMany
+    @JsonIgnore
     private List<Class> classesContainingSpell = new ArrayList<>();
 
     public int getId() {

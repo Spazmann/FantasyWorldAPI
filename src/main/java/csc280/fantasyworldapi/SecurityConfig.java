@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
@@ -38,9 +39,9 @@ public class SecurityConfig {
         JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
 
         userDetailsManager.setUsersByUsernameQuery(
-                "SELECT username, password, true as enabled FROM users WHERE username = ?");
+                "SELECT username, password, true as enabled FROM user WHERE username = ?");
         userDetailsManager.setAuthoritiesByUsernameQuery(
-                "SELECT username, role FROM users WHERE username = ?");
+                "SELECT username, role FROM user WHERE username = ?");
 
         userDetailsManager.setRolePrefix("ROLE_");
         userDetailsManager.setEnableAuthorities(true);
@@ -65,6 +66,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/spell/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/spell/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/spell/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/character/add").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults());
 
@@ -80,6 +82,8 @@ public class SecurityConfig {
             corsConfiguration.setAllowCredentials(true);
             return corsConfiguration;
         }));
+
+        //System.out.println(BCrypt.hashpw("pass", BCrypt.gensalt()));
 
         return http.build();
     }

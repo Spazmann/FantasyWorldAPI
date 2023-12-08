@@ -24,7 +24,7 @@ public class SpellRestController {
 
     @RequestMapping(path = "", method = RequestMethod.POST)
     @ResponseStatus(code = HttpStatus.CREATED)
-    public void createClass(@RequestBody Spell document) throws SQLException {
+    public void createSpell(@RequestBody Spell document) throws SQLException {
         spellJPARepository.save(document);
     }
 

@@ -10,13 +10,14 @@ import csc280.fantasyworldapi.objects.User;
 import csc280.fantasyworldapi.objects.UserJPRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/User")
+@RequestMapping("/user")
 public class UserRestController {
 
     @Autowired
@@ -24,7 +25,8 @@ public class UserRestController {
 
     @RequestMapping(path = "", method = RequestMethod.POST)
     @ResponseStatus(code = HttpStatus.CREATED)
-    public void createClass(@RequestBody User document) throws SQLException {
+    public void createUser(@RequestBody User document) throws SQLException {
+        document.setPassword(BCrypt.hashpw(document.getPassword(), BCrypt.gensalt()));
         userJPARepository.save(document);
     }
 

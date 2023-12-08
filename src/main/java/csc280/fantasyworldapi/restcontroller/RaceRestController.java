@@ -25,7 +25,7 @@ public class RaceRestController {
 
     @RequestMapping(path = "", method = RequestMethod.POST)
     @ResponseStatus(code = HttpStatus.CREATED)
-    public void createClass(@RequestBody Race document) throws SQLException {
+    public void createRace(@RequestBody Race document) throws SQLException {
         raceJPARepository.save(document);
     }
 

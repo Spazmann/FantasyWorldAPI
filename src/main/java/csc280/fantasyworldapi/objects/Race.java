@@ -6,6 +6,7 @@
  */
 package csc280.fantasyworldapi.objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class Race {
     private String raceName, raceImage, raceDescription;
 
     @OneToMany(mappedBy = "race")
+    @JsonIgnore
     private List<Character> characters = new ArrayList<>();
 
     public int getId() {
